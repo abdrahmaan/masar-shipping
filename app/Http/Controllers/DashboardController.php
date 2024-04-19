@@ -24,52 +24,52 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $individualCount = Client::where("client_type","individual")->get()->count();
+        // $individualCount = Client::where("client_type","individual")->get()->count();
 
-        $commercialCount = Client::where("client_type","commercial")->get()->count();
+        // $commercialCount = Client::where("client_type","commercial")->get()->count();
 
-        $lettersCount = Letter::count();
+        // $lettersCount = Letter::count();
 
-        $financialCount = FinancialRequest::count();
+        // $financialCount = FinancialRequest::count();
 
-        $appointmentsCount = Appointment::select("status",DB::raw("COUNT(id) as count"))->groupBy("status")->get();
+        // $appointmentsCount = Appointment::select("status",DB::raw("COUNT(id) as count"))->groupBy("status")->get();
 
 
-        $appointmentsSaryCount = Appointment::where("status","سارى")->count("id");
+        // $appointmentsSaryCount = Appointment::where("status","سارى")->count("id");
 
-        session()->put("appointment",$appointmentsSaryCount);
+        // session()->put("appointment",$appointmentsSaryCount);
 
-        $payments = Payment::select(DB::raw("dateOfPay as Date"),DB::raw("SUM(amount) as Total"))
-        ->where("paymentType","debit")
-        ->groupBy("dateOfPay")
-        ->orderBy("dateOfPay","desc")
-        ->take(7)
-        ->get();
+        // $payments = Payment::select(DB::raw("dateOfPay as Date"),DB::raw("SUM(amount) as Total"))
+        // ->where("paymentType","debit")
+        // ->groupBy("dateOfPay")
+        // ->orderBy("dateOfPay","desc")
+        // ->take(7)
+        // ->get();
 
-        $terms_conditions = Terms::select("contract_type",DB::raw("COUNT(id) as count"))->groupBy("contract_type")->get();
+        // $terms_conditions = Terms::select("contract_type",DB::raw("COUNT(id) as count"))->groupBy("contract_type")->get();
 
-        $penals = Penal::select("contract_type",DB::raw("COUNT(id) as count"))->groupBy("contract_type")->get();
+        // $penals = Penal::select("contract_type",DB::raw("COUNT(id) as count"))->groupBy("contract_type")->get();
 
-        $waranty_policiy = WarantyPoliciy::where("status","active")->count("id");
+        // $waranty_policiy = WarantyPoliciy::where("status","active")->count("id");
 
         // return dd($terms_conditions,$penals,$waranty_policiy);
 
         // return dd($appointment_delayed_count);
 
-        $Data = [
+        // $Data = [
 
-            "individualCount" => $individualCount,
-            "commercialCount" => $commercialCount,
-            "lettersCount" => $lettersCount,
-            "financialCount" => $financialCount,
-            "appointmentsCount" => $appointmentsCount,
-            "payments" => $payments,
-            "terms_conditions" => $terms_conditions,
-            "penals" => $penals,
-            "waranty_policiy" => $waranty_policiy,
-        ];
+        //     "individualCount" => $individualCount,
+        //     "commercialCount" => $commercialCount,
+        //     "lettersCount" => $lettersCount,
+        //     "financialCount" => $financialCount,
+        //     "appointmentsCount" => $appointmentsCount,
+        //     "payments" => $payments,
+        //     "terms_conditions" => $terms_conditions,
+        //     "penals" => $penals,
+        //     "waranty_policiy" => $waranty_policiy,
+        // ];
 
-        return view('dashboard', ["Data" => $Data]);
+        return view('dashboard');
     }
 
     /**

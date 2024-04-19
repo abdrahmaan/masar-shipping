@@ -13,18 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('individuals', function (Blueprint $table) {
+        Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
             $table->string("fullName");
             $table->string("gender");
             $table->string("phone");
             $table->string("phoneTwo");
+            $table->string("email");
             $table->string("address");
             $table->string("district");
             $table->string("city");
-            $table->integer("postalCode");
-            $table->string("national_id")->default("لا يوجد");
-            $table->string("dateOfBirth");
+            $table->string("national_id");
+            $table->double("commission");
+            $table->string("dateOfBirth")->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('individuals');
+        Schema::dropIfExists('delivery');
     }
 };

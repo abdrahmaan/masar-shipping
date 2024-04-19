@@ -5,24 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Appointment extends Model
+class Orders extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        "client_id",
-        "fullName" ,
+        "order_id",
+        "clientName",
         "phone",
         "phoneTwo",
         "address",
-        "district",
+        "distinict",
         "city",
-        "dateOfAppointment",
-        "dayOfAppointment",
-        "timeOfAppointment",
-        "reason",
+        "amount",
+        "shipFee",
+        "companyFee",
         "status",
-        "op",
-        "op_description",
+        "delivery_id",
     ];
 }

@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Client;
+use App\Models\DelDelivery;
+use App\Models\Delivery;
 use App\Traits\EmployeeAccess;
 
-class CommercialController extends Controller
+class DeliveryEmpController extends Controller
 {
 
     use EmployeeAccess;
@@ -17,45 +18,45 @@ class CommercialController extends Controller
      */
     public function index(Request $request)
     {
-        $this->checkEmployeeHasAccess("view-commercial-client");
+
+        // $this->checkEmployeeHasAccess("view-individual-DelDelivery");
 
         $id = $request->id;
         $fullName = $request->fullName;
         $phone = $request->phone;
-        $registerNumber = $request->registerNumber;
+        $national_id = $request->national_id;
         $perPage = $request->perPage ?? 20;
 
 
 
+        $Delviery = Delivery::query();
 
-        $Clients = Client::query();
-
-        $Clients->where("client_type","commercial");
 
         if (isset($id) && $id !== null) {
-             $Clients->where("id",$id);
+             $Delviery->where("id",$id);
         }
 
         if (isset($fullName) && $fullName !== null) {
 
-             $Clients->where('fullName', 'like', '%' . $fullName . '%')
-                    ->orWhere('tradeName', 'like', '%' . $fullName . '%');
-
+             $Delviery->where('fullName', 'like', '%' . $fullName . '%');
         }
 
         if (isset($phone) && $phone !== null) {
 
-             $Clients->where('phone', 'like', '%' . $phone . '%')
+             $Delviery->where('phone', 'like', '%' . $phone . '%')
                     ->orWhere("phoneTwo", "like", "%" . $phone . "%");
         }
 
-        if (isset($registerNumber) && $registerNumber !== null) {
+        if (isset($national_id) && $national_id !== null) {
 
-             $Clients->where('registerNumber', 'like', '%' . $registerNumber . '%');
+             $Delviery->where('national_id', 'like', '%' . $national_id . '%');
         }
 
-      $lastData = $Clients->where("client_type","commercial")->paginate($perPage)->withQueryString();
-      return view("client.commercial.view" ,[ "Data"=> $lastData] );
+
+
+      $lastData = $Delviery->paginate($perPage)->withQueryString();
+
+      return view("delivery.view" ,[ "Data"=> $lastData] );
     }
 
     /**
@@ -65,9 +66,9 @@ class CommercialController extends Controller
      */
     public function create()
     {
-        $this->checkEmployeeHasAccess("create-commercial-client");
+       // $this->checkEmployeeHasAccess("create-individual-DelDelivery");
 
-        return view("client.commercial.create");
+        return view("delivery.create");
     }
 
     /**
@@ -79,54 +80,54 @@ class CommercialController extends Controller
     public function store(Request $request)
     {
 
-        $this->checkEmployeeHasAccess("create-commercial-client");
+        // $this->checkEmployeeHasAccess("create-individual-DelDelivery");
 
 
-        $request["client_type"] = 'commercial';
 
         $request->validate([
-            "tradeName" => "required",
             "fullName" => "required",
             "gender" => "required",
-            "taxNumber" => "required",
-            "registerNumber" => "required",
             "phone" => "required",
             "phoneTwo" => "required",
-            "email" => "required",
             "address" => "required",
+            "email" => "required",
             "district" => "required",
             "city" => "required",
-            "postalCode" => "required",
+            "dateOfBirth" => "required",
+            "national_id" => "required",
+            "commission" => "required",
+            "username" => "required|unique:employees,username",
         ],[
-            "tradeName.required" => "الإسم التجارى مطلوب",
             "fullName.required" => "الإسم الثلاثى مطلوب",
             "gender.required" => "الجنس مطلوب",
-            "taxNumber.required" => "الرقم الضريبي مطلوب",
-            "registerNumber.required" => "رقم السجل التجارى مطلوب",
             "phone.required" => "رقم التليفون مطلوب",
             "phoneTwo.required" => "رقم تليفون أخر مطلوب",
-            "email.required" => "البريد الإلكترونى مطلوب",
             "address.required" => "العنوان مطلوب",
+            "email.required" => "من فضلك البريد الإلكترونى مطلوب",
             "district.required" => "الحى مطلوب",
             "city.required" => "المدينة مطلوبة",
             "postalCode.required" => "الرمز البريدي مطلوب",
+            "dateOfBirth.required" => "تاريخ الميلاد مطلوب",
+            "national_id.required" => "رقم الهوية مطلوب",
+            "commission.required" => "العمولة مطلوبة",
+            "username.required" => "إسم المستخدم مطلوب",
+            "username.unique" => "إسم المستخدم موجود من قبل",
         ]);
 
-        $insert =  Client::create($request->all());
+       $insert =  Delivery::create($request->all());
 
        if ($insert) {
 
-            session()->flash("message","تم إضافة العميل بنجاح");
+            session()->flash("message","تم إضافة المندوب بنجاح");
             return redirect()->back();
 
         } else {
 
-            session()->flash("error","يوجد مشكلة فى إضافة العميل");
+            session()->flash("error","يوجد مشكلة فى إضافة المندوب");
             return redirect()->back();
 
         }
 
-        return dd($request);
     }
 
     /**
@@ -138,30 +139,30 @@ class CommercialController extends Controller
     public function show($id)
     {
 
-        $this->checkEmployeeHasAccess("view-commercial-client");
+        $this->checkEmployeeHasAccess("view-individual-DelDelivery");
 
-        $client = Client::findOrFail( $id);
 
-         // Appointmens
-         $client->appointments;
+        $DelDelivery =Delivery::findOrFail($id);
 
-         // Letters
-         $client->letters;
+        // Appointmens
+        $DelDelivery->appointments;
 
-         // Financial_Requests
-         $client->financial_requests;
+        // Letters
+        $DelDelivery->letters;
 
-         // Payments
-         $client->payments;
+        // Financial_Requests
+        $DelDelivery->financial_requests;
 
-        $debitAmount = $client->payments()->where("paymentType","debit")->sum("amount");
-        $creditAmount = $client->payments()->where("paymentType","credit")->sum("amount");
+        // Payments
+        $DelDelivery->payments;
+
+        // CalculateDelivery Balance (Debit - Credit = Balance)
+        $debitAmount = $DelDelivery->payments()->where("paymentType","debit")->sum("amount");
+        $creditAmount = $DelDelivery->payments()->where("paymentType","credit")->sum("amount");
         $balance = $debitAmount - $creditAmount;
 
-       // return dd($client);
 
-
-        return view("client.profile", ["Data" => $client, "balance" => $balance]);
+        return view("DelDelivery.profile", ["Data" => $DelDelivery , "balance" => $balance]);
     }
 
     /**
@@ -172,12 +173,12 @@ class CommercialController extends Controller
      */
     public function edit($id)
     {
-        $this->checkEmployeeHasAccess("edit-commercial-client");
 
+        $this->checkEmployeeHasAccess("edit-individual-DelDelivery");
 
-        $client = Client::findOrFail( $id);
+        $DelDelivery =Delivery::findOrFail($id);
 
-        return view("client.commercial.update", ["Data" => $client]);
+        return view("DelDelivery.individual.update" , ["Data" => $DelDelivery]);
     }
 
     /**
@@ -190,39 +191,36 @@ class CommercialController extends Controller
     public function update(Request $request, $id)
     {
 
-        $this->checkEmployeeHasAccess("edit-commercial-client");
+        $this->checkEmployeeHasAccess("edit-individual-DelDelivery");
 
-        $request["client_type"] = 'commercial';
+        $request["DelDelivery_type"] = 'individual';
 
         $request->validate([
-            "tradeName" => "required",
             "fullName" => "required",
             "gender" => "required",
-            "taxNumber" => "required",
-            "registerNumber" => "required",
             "phone" => "required",
             "phoneTwo" => "required",
-            "email" => "required",
             "address" => "required",
+            "email" => "required",
             "district" => "required",
             "city" => "required",
             "postalCode" => "required",
+            "dateOfBirth" => "required",
         ],[
-            "tradeName.required" => "الإسم التجارى مطلوب",
             "fullName.required" => "الإسم الثلاثى مطلوب",
             "gender.required" => "الجنس مطلوب",
-            "taxNumber.required" => "الرقم الضريبي مطلوب",
-            "registerNumber.required" => "رقم السجل التجارى مطلوب",
             "phone.required" => "رقم التليفون مطلوب",
             "phoneTwo.required" => "رقم تليفون أخر مطلوب",
-            "email.required" => "البريد الإلكترونى مطلوب",
             "address.required" => "العنوان مطلوب",
+            "email.required" => "من فضلك البريد الإلكترونى مطلوب",
             "district.required" => "الحى مطلوب",
             "city.required" => "المدينة مطلوبة",
             "postalCode.required" => "الرمز البريدي مطلوب",
+            "dateOfBirth.required" => "تاريخ الميلاد مطلوب",
         ]);
 
-        $update =  Client::where("id",$id)->update($request->except(["_token"]));
+       $update = Delivery::where("id",$id)->update($request->except(['_token']));
+
 
        if ($update) {
 
@@ -231,7 +229,7 @@ class CommercialController extends Controller
 
         } else {
 
-            session()->flash("error","يوجد مشكلة فى إضافة العميل");
+            session()->flash("error","يوجد مشكلة فى تعديل العميل");
             return redirect()->back();
 
         }
@@ -246,11 +244,11 @@ class CommercialController extends Controller
     public function destroy($id)
     {
 
-        $this->checkEmployeeHasAccess("delete-commercial-client");
+        $this->checkEmployeeHasAccess("delete-individual-DelDelivery");
 
-        $client = Client::where("id",$id)->delete();
+        $DelDelivery =Delivery::where("id",$id)->delete();
 
-        if ($client) {
+        if ($DelDelivery) {
 
             session()->flash("message","تم حذف العميل بنجاح");
             return redirect()->back();

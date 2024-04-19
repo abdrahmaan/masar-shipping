@@ -3,12 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CarsController;
-use App\Http\Controllers\IndividualController;
 use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\DeliveryEmpController;
 use App\Http\Controllers\ElevatorSpecificationsController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LetterController;
@@ -85,29 +85,29 @@ Route::middleware(['auth-user'])->group(function () {
 
        // ***************************************************************************
 
-       // Individual Client
+       // Delivery Client
 
-             // New Individual Client
-             Route::get('/new-individual-client', [IndividualController::class,"create"]);
+             // New Delivery Client
+             Route::get('/new-delivery', [DeliveryEmpController::class,"create"]);
 
-             // New Individual Client - Store
-             Route::post('/new-individual-client', [IndividualController::class,"store"]);
+             // New Delivery Client - Store
+             Route::post('/new-delivery', [DeliveryEmpController::class,"store"]);
 
-             // Edit Individual Client
-             Route::get('/edit-individual-client/{id}', [IndividualController::class,"edit"]);
+             // Edit Delivery Client
+             Route::get('/edit-delivery/{id}', [DeliveryEmpController::class,"edit"]);
 
-             // Edit Individual Client - Update
-             Route::post('/edit-individual-client/{id}', [IndividualController::class,"update"]);
+             // Edit Delivery Client - Update
+             Route::post('/edit-delivery/{id}', [DeliveryEmpController::class,"update"]);
 
-             // Individual Client Car
-             Route::get('/delete-individual-client/{id}', [IndividualController::class,"destroy"]);
+             // Delivery Delete
+             Route::get('/delete-delivery/{id}', [DeliveryEmpController::class,"destroy"]);
 
-             // All Individual Client View
-             Route::get('/individual-clients', [IndividualController::class,"index"] );
+             // All Delivery Client View
+             Route::get('/deliveries', [DeliveryEmpController::class,"index"] );
 
-             // Individual Client Profile
-             Route::get('/individual-clients/profile/{id}', [IndividualController::class,"show"] );
-             Route::get('/profile/{id}', [IndividualController::class,"show"] );
+             // Delivery Profile
+             Route::get('/delivery/profile/{id}', [DeliveryEmpController::class,"show"] );
+             Route::get('/profile/{id}', [DeliveryEmpController::class,"show"] );
 
        // ***************************************************************************
 

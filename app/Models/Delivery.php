@@ -9,14 +9,13 @@ use App\Models\Letter;
 use App\Models\FinancialRequest;
 use App\Models\Payment;
 
-class Client extends Model
+class Delivery extends Model
 {
     use HasFactory;
 
 
     protected $fillable = [
-        "client_type",
-        "tradeName" ,
+
         "fullName",
         "gender" ,
         "phone",
@@ -25,11 +24,9 @@ class Client extends Model
         "address",
         "district",
         "city",
-        "postalCode",
         "national_id" ,
         "dateOfBirth",
-        "taxNumber" ,
-        "registerNumber",
+        "commission",
     ];
 
 
@@ -54,5 +51,5 @@ class Client extends Model
         {
             return $this->hasMany(Payment::class, 'client_id', 'id');
         }
-    
+
 }

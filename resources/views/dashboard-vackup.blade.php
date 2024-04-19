@@ -1,6 +1,63 @@
 @extends('layout.master')
 @section('title',"لوحة التحكم")
 
+@php
+
+    // Appointment Extract to arrays
+
+    $appointment_status = array_map(function ($row)  {
+        return $row["status"];
+    }, $Data["appointmentsCount"]->toArray());
+
+    $appointment_count = array_map(function ($row)  {
+        return $row["count"];
+    }, $Data["appointmentsCount"]->toArray());
+
+
+// **********************************************************************
+
+    // Payment Data Extract to arrays
+
+    $payments_dates = array_map(function ($row)  {
+        return $row["Date"];
+    }, $Data["payments"]->toArray());
+
+    $payments_total = array_map(function ($row)  {
+        return $row["Total"];
+    }, $Data["payments"]->toArray());
+
+// **********************************************************************
+
+    // Terms Conditions Data Extract to arrays
+
+    $terms_conditions_type = array_map(function ($row)  {
+        return $row["contract_type"];
+    }, $Data["terms_conditions"]->toArray());
+
+    $terms_conditions_count = array_map(function ($row)  {
+        return $row["count"];
+    }, $Data["terms_conditions"]->toArray());
+
+
+// ***********************************************************************
+
+    // Penals Data Extract to arrays
+
+    $penals_type = array_map(function ($row)  {
+        return $row["contract_type"];
+    }, $Data["penals"]->toArray());
+
+    $penals_count = array_map(function ($row)  {
+        return $row["count"];
+    }, $Data["penals"]->toArray());
+
+
+// ***********************************************************************
+
+    // dd($appointment_status,$appointment_count);
+
+@endphp
+
 @section('content')
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
@@ -317,7 +374,7 @@
       dataLabels: {
         enabled: false
       },
-      series: [5,5],
+      series: [{{$Data["individualCount"]}},{{$Data["commercialCount"]}}],
       labels: ['عميل فردى', 'عميل تجارى']
     };
 
@@ -362,8 +419,8 @@
       dataLabels: {
         enabled: false
       },
-      series: [5],
-      labels: ["سارى"]
+      series: @json($appointment_count),
+      labels: @json($appointment_status)
     };
 
     var chart = new ApexCharts(document.querySelector("#appointmentChart"), options);
@@ -406,7 +463,7 @@
       dataLabels: {
         enabled: false
       },
-      series: [5,5],
+      series: [{{$Data["lettersCount"]}},{{$Data["financialCount"]}}],
       labels: ["الخطابات المرسلة","المطالبات المالية"]
     };
 
@@ -450,12 +507,12 @@
       series: [
         {
           name: "إجمالى قيد مدين",
-          data: revenueChartData
+          data: @json($payments_total)
         },
       ],
       xaxis: {
         type: "datetime",
-        categories: revenueChartCategories,
+        categories: @json($payments_dates),
         lines: {
           show: true
         },
@@ -543,8 +600,8 @@
         dataLabels: {
         enabled: false
         },
-        series: [4],
-        labels: ["جزاء"]
+        series: @json($terms_conditions_count),
+        labels: @json($terms_conditions_type)
     };
 
     var chart = new ApexCharts(document.querySelector("#termsChart"), options);
@@ -587,8 +644,8 @@
         dataLabels: {
         enabled: false
         },
-        series: [5],
-        labels: ["شرط جزائي"]
+        series: @json($penals_count),
+        labels: @json($penals_type)
     };
 
     var chart = new ApexCharts(document.querySelector("#penalsChart"), options);
@@ -631,7 +688,7 @@
         dataLabels: {
         enabled: false
         },
-        series: [5],
+        series: [{{$Data["waranty_policiy"]}}],
         labels: ["سياسة الضمان"]
     };
 
@@ -641,6 +698,7 @@
   // Waranty Policiy chart start
 
 
+console.log(@json($appointment_status) );
 </script>
 
 @endsection

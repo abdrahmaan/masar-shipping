@@ -13,22 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string("client_id");
-            $table->string("fullName");
+            $table->bigInteger("order_id");
+            $table->string("clientName");
             $table->string("phone");
             $table->string("phoneTwo");
             $table->string("address");
-            $table->string("district");
+            $table->string("distinict");
             $table->string("city");
-            $table->date("dateOfAppointment");
-            $table->string("dayOfAppointment");
-            $table->time("timeOfAppointment");
-            $table->text("reason");
-            $table->string("status")->default("سارى");
-            $table->string("op");
-            $table->string("op_description")->default("لا يوجد");
+            $table->double("amount");
+            $table->double("shipFee");
+            $table->double("companyFee");
+            $table->string("status")->default("جاهزة للشحن");
+            $table->bigInteger("delivery_id");
             $table->timestamps();
         });
     }
@@ -40,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('orders');
     }
 };
