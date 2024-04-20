@@ -92,7 +92,7 @@ class EmployeeController extends Controller
 
     function resetPassword($id) {
 
-        $this->checkEmployeeHasAccess("reset-password-employees");
+        // // $this->checkEmployeeHasAccess("reset-password-employees");
 
         $employee = Employee::findOrFail($id);
 
@@ -115,7 +115,7 @@ class EmployeeController extends Controller
     {
 
 
-        $this->checkEmployeeHasAccess("view-employees");
+        // $this->checkEmployeeHasAccess("view-employees");
 
         $id = $request->id;
         $name = $request->name;
@@ -127,6 +127,8 @@ class EmployeeController extends Controller
 
 
         $employee = Employee::query();
+
+        $roles = Role::distinct()->pluck("role")->toArray();
 
 
         if (isset($id) && $id !== null) {
@@ -154,7 +156,7 @@ class EmployeeController extends Controller
       $lastData = $employee->paginate($perPage)->withQueryString();
 
 
-        return view("users.view" , ["Data" => $lastData]);
+        return view("users.view" , ["Data" => $lastData, "Roles" => $roles]);
     }
 
     /**
@@ -165,7 +167,7 @@ class EmployeeController extends Controller
     public function create()
     {
 
-        $this->checkEmployeeHasAccess("create-employees");
+        // $this->checkEmployeeHasAccess("create-employees");
 
 
         $roles = Role::distinct()->pluck("role")->toArray();
@@ -182,7 +184,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
 
-        $this->checkEmployeeHasAccess("create-employees");
+        // $this->checkEmployeeHasAccess("create-employees");
 
 
         $request->validate([
@@ -245,7 +247,7 @@ class EmployeeController extends Controller
     public function edit($id)
     {
 
-        $this->checkEmployeeHasAccess("edit-employees");
+        // $this->checkEmployeeHasAccess("edit-employees");
 
         $employee = Employee::findOrFail($id);
 
@@ -264,7 +266,7 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
 
-        $this->checkEmployeeHasAccess("edit-employees");
+        // $this->checkEmployeeHasAccess("edit-employees");
 
         $request->validate([
             "name" => "required",
@@ -310,7 +312,7 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
 
-        $this->checkEmployeeHasAccess("delete-employees");
+        // $this->checkEmployeeHasAccess("delete-employees");
 
         $query =  Employee::find($id);
 

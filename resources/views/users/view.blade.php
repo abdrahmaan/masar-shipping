@@ -63,7 +63,9 @@
                                         <label for="role" class="text-right w-100 my-1">الوظيفة / الصلاحية</label>
                                         <select class="form-control text-right" name="role" id="">
                                             <option value="الكل">الكل</option>
-                                            <option value="Admin">Admin</option>
+                                            @foreach ($Roles as $role)
+                                             <option value="{{$role}}">{{$role}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

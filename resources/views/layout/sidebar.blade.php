@@ -77,13 +77,9 @@
 
 
 
-            @if (in_array('view-employees', $permissions) ||
-                    in_array('create-employees', $permissions) ||
-                    in_array('view-role', $permissions) ||
-                    in_array('create-role', $permissions))
                 <li class="nav-item nav-category">الموظفين</li>
-            @endif
-            @if (in_array('view-employees', $permissions) || in_array('create-employees', $permissions))
+
+
 
                 <li class="nav-item" data-url="employee">
                     <a class="nav-link" data-bs-toggle="collapse" href="#users" role="button"
@@ -94,22 +90,22 @@
                     </a>
                     <div class="collapse" id="users">
                         <ul class="nav sub-menu">
-                            @if (in_array('create-employees', $permissions))
+
                                 <li class="nav-item">
                                     <a href="/new-employee" class="nav-link">إضافة موظف</a>
                                 </li>
-                            @endif
-                            @if (in_array('view-employees', $permissions))
+
+
                                 <li class="nav-item">
                                     <a href="/employees" class="nav-link">بحث فى الموظفين</a>
                                 </li>
-                            @endif
+
                         </ul>
                     </div>
                 </li>
-            @endif
 
-            @if (in_array('view-role', $permissions) || in_array('create-role', $permissions))
+
+
                 <li class="nav-item" data-url="role">
                     <a class="nav-link" data-bs-toggle="collapse" href="#roles" role="button"
                         aria-expanded="false" aria-controls="emails">
@@ -120,20 +116,20 @@
 
                     <div class="collapse" id="roles">
                         <ul class="nav sub-menu">
-                            @if (in_array('create-role', $permissions))
+
                                 <li class="nav-item">
                                     <a href="/new-role" class="nav-link">صلاحية جديدة</a>
                                 </li>
-                            @endif
-                            @if (in_array('view-role', $permissions))
+
+
                                 <li class="nav-item">
                                     <a href="/roles" class="nav-link">صلاحيات الموظفين</a>
                                 </li>
-                            @endif
+
                         </ul>
                     </div>
                 </li>
-            @endif
+
 
 
                 <li class="nav-item nav-category">الإعدادات</li>

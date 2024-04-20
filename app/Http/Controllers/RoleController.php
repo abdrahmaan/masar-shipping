@@ -18,7 +18,7 @@ class RoleController extends Controller
     public function index()
     {
 
-        $this->checkEmployeeHasAccess("view-role");
+        // $this->checkEmployeeHasAccess("view-role");
 
 
         $roles = Role::get()->groupBy("role")->toArray();
@@ -35,7 +35,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $this->checkEmployeeHasAccess("create-role");
+        // $this->checkEmployeeHasAccess("create-role");
 
 
         return view("roles.create");
@@ -50,7 +50,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
 
-        $this->checkEmployeeHasAccess("create-role");
+        // $this->checkEmployeeHasAccess("create-role");
 
 
         $request->validate([
@@ -98,7 +98,7 @@ class RoleController extends Controller
     public function edit($role)
     {
 
-        $this->checkEmployeeHasAccess("edit-role");
+        // $this->checkEmployeeHasAccess("edit-role");
 
 
         $roles = Role::where("role",$role)->orderBy("permission","ASC")
@@ -119,7 +119,7 @@ class RoleController extends Controller
     public function update(Request $request, $role)
     {
 
-        $this->checkEmployeeHasAccess("edit-role");
+        // $this->checkEmployeeHasAccess("edit-role");
 
 
         if (count($request->all()) < 3) {
@@ -156,7 +156,7 @@ class RoleController extends Controller
     public function destroy($role)
     {
 
-        $this->checkEmployeeHasAccess("delete-role");
+        // $this->checkEmployeeHasAccess("delete-role");
 
 
         $deleteRole = Role::where("role",$role)->delete();

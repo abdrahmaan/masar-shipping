@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\DelDelivery;
 use App\Models\Delivery;
+use App\Models\Employee;
 use App\Traits\EmployeeAccess;
+use Carbon\Carbon;
 
 class DeliveryEmpController extends Controller
 {
@@ -19,7 +20,7 @@ class DeliveryEmpController extends Controller
     public function index(Request $request)
     {
 
-        // $this->checkEmployeeHasAccess("view-individual-DelDelivery");
+        // $this->checkEmployeeHasAccess("view-individual-Del$Delviery");
 
         $id = $request->id;
         $fullName = $request->fullName;
@@ -66,7 +67,7 @@ class DeliveryEmpController extends Controller
      */
     public function create()
     {
-       // $this->checkEmployeeHasAccess("create-individual-DelDelivery");
+       // $this->checkEmployeeHasAccess("create-individual-Del$Delviery");
 
         return view("delivery.create");
     }
@@ -80,7 +81,7 @@ class DeliveryEmpController extends Controller
     public function store(Request $request)
     {
 
-        // $this->checkEmployeeHasAccess("create-individual-DelDelivery");
+        // $this->checkEmployeeHasAccess("create-individual-Del$Delviery");
 
 
 
@@ -116,7 +117,22 @@ class DeliveryEmpController extends Controller
 
        $insert =  Delivery::create($request->all());
 
-       if ($insert) {
+
+      $insertEmp = Employee::create([
+        "name" => $request->fullName,
+        "username" => $request->username,
+        "password" => "123456",
+        "phone" => $request->phone,
+        "phoneTwo" => $request->phoneTwo,
+        "address" => $request->address,
+        "district" => $request->district,
+        "city" => $request->city,
+        "role" => "مندوب توصيل",
+        "salary" => "0",
+        "dateOfJoin" => Carbon::now(),
+    ]);
+
+       if ($insert && $insertEmp) {
 
             session()->flash("message","تم إضافة المندوب بنجاح");
             return redirect()->back();
@@ -139,30 +155,30 @@ class DeliveryEmpController extends Controller
     public function show($id)
     {
 
-        $this->checkEmployeeHasAccess("view-individual-DelDelivery");
+       // $this->checkEmployeeHasAccess("view-individual-Del$Delviery");
 
 
-        $DelDelivery =Delivery::findOrFail($id);
+        $Delviery = Delivery::findOrFail($id);
 
         // Appointmens
-        $DelDelivery->appointments;
+        $Delviery->appointments;
 
         // Letters
-        $DelDelivery->letters;
+        $Delviery->letters;
 
         // Financial_Requests
-        $DelDelivery->financial_requests;
+        $Delviery->financial_requests;
 
         // Payments
-        $DelDelivery->payments;
+        $Delviery->payments;
 
         // CalculateDelivery Balance (Debit - Credit = Balance)
-        $debitAmount = $DelDelivery->payments()->where("paymentType","debit")->sum("amount");
-        $creditAmount = $DelDelivery->payments()->where("paymentType","credit")->sum("amount");
+        $debitAmount = $Delviery->payments()->where("paymentType","debit")->sum("amount");
+        $creditAmount = $Delviery->payments()->where("paymentType","credit")->sum("amount");
         $balance = $debitAmount - $creditAmount;
 
 
-        return view("DelDelivery.profile", ["Data" => $DelDelivery , "balance" => $balance]);
+        return view("Del$Delviery.profile", ["Data" => $Delviery , "balance" => $balance]);
     }
 
     /**
@@ -174,11 +190,11 @@ class DeliveryEmpController extends Controller
     public function edit($id)
     {
 
-        $this->checkEmployeeHasAccess("edit-individual-DelDelivery");
+       // $this->checkEmployeeHasAccess("edit-individual-Del$Delviery");
 
-        $DelDelivery =Delivery::findOrFail($id);
+        $Delviery = Delivery::findOrFail($id);
 
-        return view("DelDelivery.individual.update" , ["Data" => $DelDelivery]);
+        return view("delivery.update" , ["Data" => $Delviery]);
     }
 
     /**
@@ -191,45 +207,47 @@ class DeliveryEmpController extends Controller
     public function update(Request $request, $id)
     {
 
-        $this->checkEmployeeHasAccess("edit-individual-DelDelivery");
+       // $this->checkEmployeeHasAccess("edit-individual-Del$Delviery");
 
-        $request["DelDelivery_type"] = 'individual';
 
-        $request->validate([
-            "fullName" => "required",
-            "gender" => "required",
-            "phone" => "required",
-            "phoneTwo" => "required",
-            "address" => "required",
-            "email" => "required",
-            "district" => "required",
-            "city" => "required",
-            "postalCode" => "required",
-            "dateOfBirth" => "required",
-        ],[
-            "fullName.required" => "الإسم الثلاثى مطلوب",
-            "gender.required" => "الجنس مطلوب",
-            "phone.required" => "رقم التليفون مطلوب",
-            "phoneTwo.required" => "رقم تليفون أخر مطلوب",
-            "address.required" => "العنوان مطلوب",
-            "email.required" => "من فضلك البريد الإلكترونى مطلوب",
-            "district.required" => "الحى مطلوب",
-            "city.required" => "المدينة مطلوبة",
-            "postalCode.required" => "الرمز البريدي مطلوب",
-            "dateOfBirth.required" => "تاريخ الميلاد مطلوب",
-        ]);
 
+       $request->validate([
+        "fullName" => "required",
+        "gender" => "required",
+        "phone" => "required",
+        "phoneTwo" => "required",
+        "address" => "required",
+        "email" => "required",
+        "district" => "required",
+        "city" => "required",
+        "dateOfBirth" => "required",
+        "national_id" => "required",
+        "commission" => "required",
+    ],[
+        "fullName.required" => "الإسم الثلاثى مطلوب",
+        "gender.required" => "الجنس مطلوب",
+        "phone.required" => "رقم التليفون مطلوب",
+        "phoneTwo.required" => "رقم تليفون أخر مطلوب",
+        "address.required" => "العنوان مطلوب",
+        "email.required" => "من فضلك البريد الإلكترونى مطلوب",
+        "district.required" => "الحى مطلوب",
+        "city.required" => "المدينة مطلوبة",
+        "postalCode.required" => "الرمز البريدي مطلوب",
+        "dateOfBirth.required" => "تاريخ الميلاد مطلوب",
+        "national_id.required" => "رقم الهوية مطلوب",
+        "commission.required" => "العمولة مطلوبة",
+    ]);
        $update = Delivery::where("id",$id)->update($request->except(['_token']));
 
 
        if ($update) {
 
-            session()->flash("message","تم تعديل العميل بنجاح");
+            session()->flash("message","تم تعديل المندوب بنجاح");
             return redirect()->back();
 
         } else {
 
-            session()->flash("error","يوجد مشكلة فى تعديل العميل");
+            session()->flash("error","يوجد مشكلة فى تعديل المندوب");
             return redirect()->back();
 
         }
@@ -244,18 +262,18 @@ class DeliveryEmpController extends Controller
     public function destroy($id)
     {
 
-        $this->checkEmployeeHasAccess("delete-individual-DelDelivery");
+     //   $this->checkEmployeeHasAccess("delete-individual-Del$Delviery");
 
-        $DelDelivery =Delivery::where("id",$id)->delete();
+        $Delviery = Delivery::where("id",$id)->delete();
 
-        if ($DelDelivery) {
+        if ($Delviery) {
 
-            session()->flash("message","تم حذف العميل بنجاح");
+            session()->flash("message","تم حذف المندوب بنجاح");
             return redirect()->back();
 
         } else {
 
-            session()->flash("error","يوجد مشكلة فى حذف العميل");
+            session()->flash("error","يوجد مشكلة فى حذف المندوب");
             return redirect()->back();
 
         }

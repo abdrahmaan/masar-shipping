@@ -22,21 +22,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Delivery::factory()->count(3000)->create();
+        Delivery::factory()->count(500)->create();
 
-        // Employee::create([
-        //     "name" => "Abdulrahman Hamdy",
-        //     "username" => "bedoohamdy",
-        //     "password" => "112233",
-        //     "phone" => "01110645479",
-        //     "phoneTwo" => "01110645479",
-        //     "address" => "71 Kamel Atyia Morsi",
-        //     "district" => "Imbaba",
-        //     "city" => "Giza",
-        //     "role" => "Admin",
-        //     "salary" => "3000",
-        //     "dateOfJoin" => "2024-05-11",
-        // ]);
+        Employee::create([
+            "name" => "Abdulrahman Hamdy",
+            "username" => "bedoohamdy",
+            "password" => "112233",
+            "phone" => "01110645479",
+            "phoneTwo" => "01110645479",
+            "address" => "71 Kamel Atyia Morsi",
+            "district" => "Imbaba",
+            "city" => "Giza",
+            "role" => "Admin",
+            "salary" => "3000",
+            "dateOfJoin" => "2024-05-11",
+        ]);
 
     }
 }

@@ -1,23 +1,24 @@
 @extends('layout.master')
-@section('title',"تعديل عميل فردى")
-    
+@section('title',"تعديل مندوب")
+
 
 @section('content')
 
 <div>
-    <h4 class="mb-4">تعديل عميل فردى</h4>
+    <h4 class="mb-4">تعديل بيانات مندوب </h4>
 </div>
 
 <div class="row">
 
-        
+
     <div class="col-12">
-        <form id="new-car" action="/edit-individual-client/{{$Data->id}}" method="POST">
+        <form id="new-car" action="/edit-delivery/{{$Data->id}}" method="POST">
             @csrf
-                <!-- بيانات العميل -->
+
+                <!-- بيانات مندوب التوصيل -->
             <div class="card my-3">
-                <div class="card-header d-flex align-items-center">   
-                    <h3 class="card-title m-0">تعديل بيانات العميل الفردى</h3>
+                <div class="card-header d-flex align-items-center">
+                    <h3 class="card-title m-0">بيانات مندوب التوصيل</h3>
                     <div class="card-tools mx-3">
                         <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#car-dim" aria-expanded="true" aria-controls="car-dim">
                             <i data-feather="plus"></i>
@@ -27,13 +28,13 @@
                 <div class="collapse show" id="car-dim">
                     <div class="card-body">
                         <div class="row justify-content-start">
-                        
+
 
                             <!-- الإسم ثلاثى  -->
                                 <div class="col-lg-3 my-1">
                                         <div class="form-group  mx-2 d-block">
                                             <label for="fullName" class="text-right w-100 my-1">الإسم ثلاثى</label>
-                                            <input name="fullName" value="{{$Data->fullName}}" type="text" class="form-control text-right" id="exampleInputEmail1" placeholder="الإسم ثلاثى">
+                                            <input  name="fullName" type="text" class="form-control text-right" value="{{$Data->fullName}}" id="exampleInputEmail1" placeholder="الإسم ثلاثى">
                                         </div>
                                 </div>
                                 <!-- الجنس -->
@@ -43,7 +44,7 @@
                                     <select name="gender" class="form-control text-right" style="min-width: 121px">
                                         <option disabled>الإختيار المحدد</option>
                                         <option value="{{$Data->gender}}">{{$Data->gender}}</option>
-                                        <option disabled>الإختيار المتاحة</option>
+                                        <option disabled>الإختيارات المتاحة</option>
                                         <option value="ذكر">ذكر</option>
                                         <option value="أنثى">أنثى</option>
 
@@ -53,43 +54,43 @@
                             <!-- رقم التليفون  -->
                                 <div class="col-lg-3 my-1">
                                         <div class="form-group  mx-2 d-block">
-                                            <label for="phone"  class="text-right w-100 my-1">رقم التليفون</label>
-                                            <input name="phone"  value="{{intval($Data->phone)}}" type="number" class="form-control text-right" id="exampleInputEmail1" placeholder="رقم التليفون">
+                                            <label for="phone" class="text-right w-100 my-1">رقم التليفون</label>
+                                            <input  name="phone" type="number" class="form-control text-right" value="{{intval($Data->phone)}}" id="exampleInputEmail1" placeholder="رقم التليفون">
                                         </div>
                                 </div>
                             <!--  2 رقم التليفون  -->
                                 <div class="col-lg-3 my-1">
                                         <div class="form-group  mx-2 d-block">
                                             <label for="phoneTwo" class="text-right w-100 my-1">رقم تليفون أخر</label>
-                                            <input name="phoneTwo"  value="{{intval($Data->phone)}}" type="number" class="form-control text-right" id="exampleInputEmail1" placeholder="رقم تليفون أخر">
+                                            <input  name="phoneTwo" type="number" class="form-control text-right" value="{{intval($Data->phoneTwo)}}" id="exampleInputEmail1" placeholder="رقم تليفون أخر">
                                         </div>
-                                </div>       
+                                </div>
+                                 <!--  الإيميل -->
+                            <div class="col-lg-3 my-1">
+                                <div class="form-group  mx-2 d-block">
+                                    <label for="email" class="text-right w-100 my-1">الإيميل</label>
+                                    <input  name="email" type="email" class="form-control text-right" value="{{$Data->email}}" id="exampleInputEmail1" placeholder="البريد الإلكترونى">
+                                </div>
+                            </div>
                             <!--  العنوان -->
                             <div class="col-lg-6 my-1">
                                 <div class="form-group  mx-2 d-block">
                                     <label for="address" class="text-right w-100 my-1">العنوان</label>
-                                    <input name="address"  value="{{$Data->address}}" type="text" class="form-control text-right" id="exampleInputEmail1" placeholder="العنوان">
+                                    <input  name="address" type="text" class="form-control text-right" value="{{$Data->address}}" id="exampleInputEmail1" placeholder="العنوان">
                                 </div>
                             </div>
 
-                            <!--  الإيميل -->
-                            <div class="col-lg-3 my-1">
-                                <div class="form-group  mx-2 d-block">
-                                    <label for="email" class="text-right w-100 my-1">الإيميل</label>
-                                    <input name="email"  value="{{$Data->email}}" type="email" class="form-control text-right" id="exampleInputEmail1" placeholder="البريد الإلكترونى">
-                                </div>
-                            </div>
+
 
                             <!-- الحي -->
                             <div class="col-lg-3 my-1">
                                 <div class="form-group mx-2 d-block">
                                     <label for="district" class="text-right w-100 my-1">الحي</label>
                                     <select name="district" class="form-control text-right" style="min-width: 121px">
-                                          <option disabled>الإخيار المحدد</option>  
-                                            <option value="{{$Data->district}}">{{$Data->district}}</option>
-                                          <option disabled>الإخيارات المتاحة</option>  
-
-                                            <optgroup label="أحياء شرق الرياض">
+                                        <option disabled>الإختيار المحدد</option>
+                                        <option value="{{$Data->district}}">{{$Data->district}}</option>
+                                        <option disabled>الإختيارات المتاحة</option>
+                                        <optgroup label="أحياء شرق الرياض">
                                               <option value="الرمال">الرمال</option>
                                               <option value="اليرموك">اليرموك</option>
                                               <option value="المونسية">المونسية</option>
@@ -235,7 +236,7 @@
                                               <option value="جامعة الملك سعود">جامعة الملك سعود</option>
                                               <option value="جامعة الأميرة نورة">جامعة الأميرة نورة</option>
                                               <option value="مركز الملك عبدالله للدراسات والبحوث">مركز الملك عبدالله للدراسات والبحوث</option>
-                                            </optgroup>            
+                                            </optgroup>
                                             <optgroup label="أحياء جنوب الرياض">
                                               <option value="العزيزية">العزيزية</option>
                                               <option value="الدار البيضاء">الدار البيضاء</option>
@@ -257,7 +258,7 @@
                                               <option value="هيت">هيت</option>
                                               <option value="عريض">عريض</option>
                                             </optgroup>
-                                            
+
                                     </select>
                                 </div>
                             </div>
@@ -266,10 +267,9 @@
                                 <div class="form-group mx-2 d-block">
                                     <label for="city" class="text-right w-100 my-1">المدينة</label>
                                     <select name="city" class="form-control text-right" style="min-width: 121px">
-                                        <option disabled>الإخيار المحدد</option>  
-                                            <option value="{{$Data->city}}">{{$Data->city}}</option>
-                                          <option disabled>الإخيارات المتاحة</option>  
-
+                                        <option disabled>الإختيار المحدد</option>
+                                        <option value="{{$Data->city}}">{{$Data->city}}</option>
+                                        <option disabled>الإختيارات المتاحة</option>
                                         <option value="الهفوف">الهفوف</option>
                                             <option value="ضباء">ضباء</option>
                                             <option value="عرعر">عرعر</option>
@@ -314,45 +314,47 @@
                                             <option value="خميس مشيط">خميس مشيط</option>
                                             <option value="المدينة المنورة">المدينة المنورة</option>
                                             <option value="وادي الدواسر">وادي الدواسر</option>
-                                        
+
                                     </select>
                                 </div>
                             </div>
-                             <!--  الرمز البريدي -->
-                             <div class="col-lg-3 my-1">
-                                <div class="form-group  mx-2 d-block">
-                                    <label for="postalCode" class="text-right w-100 my-1">الرمز البريدي</label>
-                                    <input name="postalCode"  value="{{$Data->postalCode}}" type="number" class="form-control text-right" id="exampleInputEmail1" placeholder="الرمز البريدى">
-                                </div>
-                            </div>
+
                              <!--  رقم الهوية -->
                              <div class="col-lg-3 my-1">
                                 <div class="form-group  mx-2 d-block">
                                     <label for="national_id" class="text-right w-100 my-1">رقم الهوية الوطنية</label>
-                                    <input name="national_id"  value="{{$Data->national_id}}" type="number" class="form-control text-right" id="exampleInputEmail1" placeholder="رقم الهوية الوطنى">
+                                    <input  name="national_id" type="number" class="form-control text-right" value="{{$Data->national_id}}" id="exampleInputEmail1" placeholder="رقم الهوية الوطنى">
                                 </div>
                             </div>
                              <!--  تاريخ الميلاد -->
                              <div class="col-lg-3 my-1">
                                 <div class="form-group  mx-2 d-block">
                                     <label for="dateOfBirth" class="text-right w-100 my-1">تاريخ الميلاد</label>
-                                    <input name="dateOfBirth"  value="{{$Data->dateOfBirth}}" type="date" class="form-control text-right" id="exampleInputEmail1" placeholder="تاريخ الميلاد">
+                                    <input  name="dateOfBirth" type="date" class="form-control text-right" value="{{$Data->dateOfBirth}}" id="exampleInputEmail1" placeholder="تاريخ الميلاد">
+                                </div>
+                            </div>
+                            <!--  عمولة الشركة -->
+                            <div class="col-lg-3 my-1">
+                                <div class="form-group  mx-2 d-block">
+                                    <label for="commission" class="text-right w-100 my-1">عمولة الشركة</label>
+                                    <input  name="commission" type="number" class="form-control text-right" value="{{$Data->commission}}" id="exampleInputEmail1" placeholder="0">
                                 </div>
                             </div>
 
-                          
+
+
                         </div>
-    
-                
+
+
                     </div>
-    
+
                     <div class="card-footer text-right">
                         <div class="d-flex justify-content-between align-items-center flex-row-reverse">
                             <button  type="submit" class="btn btn-success">تعديل البيانات</button>
-                            بيانات خاصة بالعميل الفردى لتسجيل العقود وعروض الأسعار 
-    
+                            بيانات خاصة بمندوب التوصيل
+
                         </div>
-    
+
                     </div>
                 </div>
 
@@ -377,14 +379,16 @@
                 },
                 phone : {
                     required: true,
-                    minlength: 12,
-                    maxlength: 12,
+                    minlength: 11,
+                    maxlength: 11,
+
 
                 },
                 phoneTwo : {
                     required: true,
-                    minlength: 12,
-                    maxlength: 12,
+                    minlength: 11,
+                    maxlength: 11,
+
 
                 },
                 gender: {
@@ -409,13 +413,17 @@
                 },
                 national_id: {
                     required: true,
-                    minlength: 10,
-                    maxlength: 10,
+                    minlength: 14,
+                    maxlength: 14,
                 },
                 dateOfBirth: {
                     required: true
                 },
-              
+                commission: {
+                    required: true
+                },
+
+
             },
             messages: {
                 fullName : {
@@ -423,13 +431,13 @@
                 },
                 phone : {
                     required: "رقم التليفون مطلوب",
-                    minlength: "أدخل رقم التليفون من 12 رقم",
-                    maxlength: "أدخل رقم التليفون من 12 رقم",
+                    minlength: "أدخل رقم التليفون من 11 رقم",
+                    maxlength: "أدخل رقم التليفون من 11 رقم",
                 },
                 phoneTwo : {
                     required: "رقم تليفون أخر مطلوب",
-                    minlength: "أدخل رقم التليفون من 12 رقم",
-                    maxlength: "أدخل رقم التليفون من 12 رقم",
+                    minlength: "أدخل رقم التليفون من 11 رقم",
+                    maxlength: "أدخل رقم التليفون من 11 رقم",
 
                 },
                 gender: {
@@ -453,13 +461,17 @@
                 },
                 national_id: {
                     required: "رقم الهوية مطلوب",
-                    minlength: "أدخل رقم هوية من 10 أرقام",
-                    maxlength: "أدخل رقم هوية من 10 أرقام",
+                    minlength: "أدخل رقم هوية من 14 أرقام",
+                    maxlength: "أدخل رقم هوية من 14 أرقام",
 
                 },
                 dateOfBirth: {
                     required: "تاريخ الميلاد مطلوب"
                 },
+                commission: {
+                    required: "عمولة الشركة مطلوبة"
+                },
+
             },
             errorElement: 'span',
             errorPlacement: function (error, element) {

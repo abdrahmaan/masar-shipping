@@ -16,7 +16,7 @@
 
 
         <div class="col-12">
-            <form id="new-car" action="/individual-clients" method="GET">
+            <form id="new-car" action="/deliveries" method="GET">
                 <!-- بيانات البحث -->
                 <div class="card my-3">
                     <div class="card-header d-flex align-items-center">
@@ -130,9 +130,9 @@
                                 <th>العنوان</th>
                                 <th>الحى</th>
                                 <th>المدينة</th>
-                                <th>الرمز البريدى</th>
                                 <th>رقم الهوية</th>
                                 <th>تاريخ الميلاد</th>
+                                <th>عمولة الشركة</th>
                                 <th>التغييرات</th>
 
                             </tr>
@@ -153,18 +153,15 @@
                                     <td>{{ $row->address }}</td>
                                     <td>{{ $row->district }}</td>
                                     <td>{{ $row->city }}</td>
-                                    <td>{{ $row->postalCode }}</td>
                                     <td>{{ $row->national_id }}</td>
                                     <td>{{ $row->dateOfBirth }}</td>
+                                    <td>{{ $row->commission }} جنية</td>
+
                                     <td>
-                                        @if (in_array('edit-individual-client', $permissions))
-                                            <a href="/edit-individual-client/{{ $row->id }}"
+                                            <a href="/edit-delivery/{{ $row->id }}"
                                                 class="btn btn-success">تعديل</a>
-                                        @endif
-                                        @if (in_array('delete-individual-client', $permissions))
-                                            <a href="/delete-individual-client/{{ $row->id }}"
+                                            <a href="/delete-delivery/{{ $row->id }}"
                                                 onclick="confirmDelete(event)" class="btn btn-danger">حذف</a>
-                                        @endif
 
                                     </td>
                                 </tr>
@@ -182,9 +179,9 @@
                                 <th>العنوان</th>
                                 <th>الحى</th>
                                 <th>المدينة</th>
-                                <th>الرمز البريدى</th>
                                 <th>رقم الهوية</th>
                                 <th>تاريخ الميلاد</th>
+                                <th>عمولة الشركة</th>
                                 <th>التغييرات</th>
 
 
